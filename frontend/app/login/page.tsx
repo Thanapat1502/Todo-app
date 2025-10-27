@@ -6,8 +6,8 @@ import CustomInput from "@/components/share/CustomInput";
 import { CustomButton } from "@/components/share/CustomButton";
 import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
-import { useAuthStore } from "@/store/zustand/useAuthStore";
-import { useUserStore } from "@/store/zustand/useUserStore";
+import useAuthStore from "@/store/zustand/useAuthStore";
+import useUserStore from "@/store/zustand/useUserStore";
 
 type FormValues = {
   email: string;

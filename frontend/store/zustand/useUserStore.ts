@@ -1,6 +1,6 @@
 // src/store/useAuthStore.ts
 import { create } from "zustand";
-import { useAuthStore } from "./useAuthStore";
+import useAuthStore from "./useAuthStore";
 import { getUserProfile } from "@/services/userSrvice";
 import UserModel from "@/common/model/user/user.model";
 
@@ -12,7 +12,7 @@ interface UserState {
   setLoading: (loading: boolean) => void; // set loading state
 }
 
-export const useUserStore = create<UserState>((set) => ({
+const useUserStore = create<UserState>((set) => ({
   user: null,
   loading: false,
   setLoading: (loading: boolean) => set({ loading }),
@@ -43,3 +43,5 @@ export const useUserStore = create<UserState>((set) => ({
   },
   removeUser: () => set({ user: null }),
 }));
+
+export default useUserStore;

@@ -1,14 +1,17 @@
 import api from "@/lib/axiosClient";
+import APIResponse from "@/common/model/api/apiResponse.model";
+import UserModel from "@/common/model/user/user.model";
 
-export function getUserProfile(): Promise<{ data: any }> {
+export function getUserProfile(): Promise<{ data: UserModel }> {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await api.get("/users/profile");
-      const data = res.data;
+      const data: UserModel = new UserModel(res.data);
+      const apiResponse: APIResponse = new APIResponse(data);
       //should call model here
-      resolve(data);
+      resolve({ data, ...apiResponse });
     } catch (err) {
-      reject(err);
+      reject(new APIResponse(err).message);
     }
   });
 }

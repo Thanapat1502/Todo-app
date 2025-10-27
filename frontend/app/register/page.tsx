@@ -6,6 +6,9 @@ import CustomInput from "@/components/share/CustomInput";
 import { CustomButton } from "@/components/share/CustomButton";
 import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
+import useUserStore from "@/store/zustand/useUserStore";
+import { useState } from "react";
+import useAuthStore from "@/store/zustand/useAuthStore";
 
 type FormValues = {
   email: string;
@@ -15,6 +18,9 @@ type FormValues = {
 };
 
 export default function Register() {
+  const [registerError, setRegisterError] = useState("");
+  const { setUpUser } = useUserStore();
+  const { registerUser } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -27,9 +33,25 @@ export default function Register() {
 
   const password = watch("password", "");
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     // For now, just log the data — no server call
     console.log("Register form submitted:", data);
+    const userData = {
+      email: data.email,
+      username: data.displayName,
+      password: data.password,
+    };
+    try {
+      const result = await registerUser(userData);
+      if (result && result.token) {
+        setUpUser();
+      } else {
+        setRegisterError("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.log(error);
+      setRegisterError("Registration failed. Please try again.");
+    }
     // Send form data to zustand
     // add loading
     // redirect to login
@@ -126,4 +148,3 @@ export default function Register() {
     </MainLayout>
   );
 }
-// ...existing code...
