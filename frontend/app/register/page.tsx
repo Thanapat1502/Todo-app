@@ -1,4 +1,3 @@
-// ...existing code...
 "use client";
 import { Text } from "@/components/share/Text";
 import { MainLayout } from "@/components/common/MainLayout";

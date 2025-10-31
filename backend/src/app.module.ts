@@ -1,9 +1,25 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres', // หรือ mysql
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'app_db',
+      autoLoadEntities: true, // สำคัญ: ให้โหลด entity อัตโนมัติ
+      synchronize: true, // ใช้เฉพาะ dev mode
+    }),
+    AuthModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
