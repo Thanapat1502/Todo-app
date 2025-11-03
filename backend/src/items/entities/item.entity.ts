@@ -17,14 +17,14 @@ export class Item {
 
   // explicit FK column so you can accept userId in DTOs
   @Column()
-  userId: number;
+  user_id: number;
 
   // relation property (do not name this `userId`)
   @ManyToOne(() => User, {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @Column()

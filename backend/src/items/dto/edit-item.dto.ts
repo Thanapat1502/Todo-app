@@ -4,6 +4,4 @@ export class EditItemDto {
   @IsString()
   @IsNotEmpty()
   item_name: string;
-
-  updatedAt: string;
 }

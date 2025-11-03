@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -22,36 +23,45 @@ export class ItemsController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Request() req: any, @Body() createItemDto: CreateItemDto) {
-    const userId = req.user?.id as number;
+    const userId = req.user?.userId as number;
+    console.log('User Id controller:', req.user);
     return this.itemsService.createNewItem(createItemDto, userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('my-items')
   findMyItems(@Request() req: any) {
-    const userId = req.user?.id as number;
+    const userId = req.user?.userId as number;
     return this.itemsService.findMyItems(userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Patch(':id/edit')
-  update(@Param('id') id: string, @Body() editItemDto: EditItemDto) {
-    return this.itemsService.editItem(+id, editItemDto);
+  @Patch('edit/:id')
+  update(
+    @Request() req: any,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() editItemDto: EditItemDto,
+  ) {
+    const userId = req.user?.userId as number;
+    return this.itemsService.editItem(id, editItemDto, userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Patch(':id/status')
+  @Patch('status/:id')
   async toggleStatus(
-    @Param('id') id: number,
+    @Request() req: any,
+    @Param('id', ParseIntPipe) id: number,
     @Body() toggleStatusDto: ToggleStatusDto,
   ) {
-    return this.itemsService.toggleStatus(id, toggleStatusDto);
+    const userId = req.user?.userId as number;
+    return this.itemsService.toggleStatus(id, toggleStatusDto, userId);
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.itemsService.remove(+id);
+  @Delete('delete/:id')
+  remove(@Param('id', ParseIntPipe) id: number, @Request() req: any) {
+    const userId = req.user?.userId as number;
+    return this.itemsService.remove(id, userId);
   }
 
   @Get()

@@ -8,7 +8,4 @@ export class CreateItemDto {
 
   @IsEnum(ItemStatusEnum)
   status: ItemStatusEnum;
-
-  createdAt: string;
-  updatedAt: string;
 }
