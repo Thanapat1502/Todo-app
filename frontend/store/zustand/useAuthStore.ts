@@ -12,14 +12,17 @@ export type UserData = {
 
 interface AuthState {
   token: string | null;
+  isInitialized: boolean;
   registerUser: (userData: UserData) => Promise<{ token: string } | null>;
 
   signIn: (email: string, password: string) => Promise<string | null>; // get
+  autoSignIn: () => Promise<void>;
   signOut: () => void;
 }
 
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
+  isInitialized: false,
   registerUser: async (userData) => {
     const { email, username, password } = userData;
     const role = UserRoleEnum.USER;
@@ -54,6 +57,16 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ token: null });
 
       return null;
+    }
+  },
+  autoSignIn: async () => {
+    const token = localStorage.getItem("token");
+    if (get().isInitialized) return; //call only one time
+
+    if (token) {
+      set({ token, isInitialized: true });
+    } else {
+      set({ token: null, isInitialized: false });
     }
   },
   signOut: () => set({ token: null }),

@@ -1,5 +1,5 @@
-import { Text } from "./Text";
-import { TextFrame } from "./TextFrame";
+import { Text } from "../../share/Text";
+import { TextFrame } from "../../share/TextFrame";
 export const UnauthenticatedManul = () => {
   return (
     <TextFrame containerClassName="w-full">
