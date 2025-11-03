@@ -56,7 +56,7 @@ export class UserService {
 
   // //Admin Only
   @UseInterceptors(ClassSerializerInterceptor)
-  async findAll() {
+  async findAllUser() {
     return this.repo.find();
   }
 }

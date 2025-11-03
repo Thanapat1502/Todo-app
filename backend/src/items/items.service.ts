@@ -52,7 +52,7 @@ export class ItemsService {
     return this.repo.delete(id);
   }
 
-  findAll() {
+  findAllItems() {
     return this.repo.find();
   }
 }
