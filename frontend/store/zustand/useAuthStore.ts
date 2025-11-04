@@ -12,33 +12,49 @@ export type UserData = {
 
 interface AuthState {
   token: string | null;
-  isInitialized: boolean;
+  registerError: string | null;
+  registerSuccess: string | null;
+  clearRegisterError: () => void;
+  clearRegisterSuccess: () => void;
   registerUser: (userData: UserData) => Promise<{ token: string } | null>;
 
+  isInitialized: boolean;
   signIn: (email: string, password: string) => Promise<string | null>; // get
   autoSignIn: () => Promise<void>;
   signOut: () => void;
 }
 
 const useAuthStore = create<AuthState>((set, get) => ({
+  //For Token
   token: null,
-  isInitialized: false,
+
+  //For Register
+  registerError: null,
+  registerSuccess: null,
+  clearRegisterError: () => set({ registerError: null }),
+  clearRegisterSuccess: () => set({ registerSuccess: null }),
   registerUser: async (userData) => {
     const { email, username, password } = userData;
     const role = UserRoleEnum.USER;
     if (email && username && password) {
       try {
         const result = await registerService(email, username, password, role);
-        console.log("result:", result);
+        console.log("CATCH Rigister Result:", result);
         set({ token: result.token });
+        set({ registerSuccess: "Register Success!" });
         return { token: result.token };
       } catch (err) {
-        console.log(err);
+        console.error("CATCH Rigister Error:", err);
+        set({ registerError: err.message });
         return null;
       }
     }
+
     return null;
   },
+
+  //For Sign-In & Sign-Out
+  isInitialized: false,
   signIn: async (email, password) => {
     try {
       const data = await loginService(email, password);

@@ -3,8 +3,8 @@ import axios from "axios";
 import useAuthStore from "@/store/zustand/useAuthStore";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
-  withCredentials: false, // true ถ้าใช้ cookie
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  withCredentials: true, // true ถ้าใช้ cookie
 });
 
 // interceptor เพิ่ม token ทุก request

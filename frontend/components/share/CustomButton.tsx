@@ -16,7 +16,9 @@ export const CustomButton = ({
       onClick={onClick}
       variant={variant}
       size={size}
-      className={`${variant === "default" && defaultClassname} ${className}`}>
+      className={`${
+        variant === "default" && defaultClassname
+      } ${className} hover:cursor-pointer`}>
       {children}
     </Button>
   );

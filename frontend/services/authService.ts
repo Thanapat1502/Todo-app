@@ -3,6 +3,7 @@ import get from "lodash/get";
 import LoginResponse from "@/common/model/auth/login.model";
 import RegisterResponse from "@/common/model/auth/register.model";
 import APIResponse from "@/common/model/api/apiResponse.model";
+import { UserRoleEnum } from "@/common/enum/user-role.enum";
 
 export function loginService(
   email: string,
@@ -20,7 +21,7 @@ export function loginService(
       const apiResponse: APIResponse = new APIResponse(get(data, "data"));
       resolve({ token: result.accessToken, ...apiResponse });
     } catch (err) {
-      reject(new APIResponse(err).message);
+      reject(new APIResponse(err));
     }
   });
 }
@@ -29,11 +30,11 @@ export function registerService(
   email: string,
   username: string,
   password: string,
-  role: string
+  role: UserRoleEnum
 ): Promise<{ token: string }> {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await api.post("/auth/register", {
+      const res = await api.post("/user/register", {
         email,
         username,
         password,
@@ -45,7 +46,10 @@ export function registerService(
       const apiResponse: APIResponse = new APIResponse(get(data, "data"));
       resolve({ token: result.accessToken, ...apiResponse });
     } catch (err) {
-      reject(new APIResponse(err).message);
+      // console.log("Error on Service-------------------------------:");
+      // console.log(err);
+      // console.log("-------------------------------:");
+      reject(new APIResponse(err));
     }
   });
 }

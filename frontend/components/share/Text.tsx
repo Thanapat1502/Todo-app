@@ -12,26 +12,48 @@ const variants = {
   Timestamp: "text-[12px] leading-[20px] font-normal italic",
 };
 
+const colors = {
+  primary: "text-black",
+  secondary: "text-gray-600",
+  success: "text-green-500",
+  warning: "text-yellow-500",
+  danger: "text-red-600",
+  info: "text-gray-700",
+  light: "text-black",
+  dark: "text-white",
+};
+
 type VariantKey = keyof typeof variants;
+type ColorKey = keyof typeof colors;
 
 type TextProps = {
   children: React.ReactNode;
   className?: string;
   varient?: VariantKey;
+  color?: ColorKey;
 };
 
 export const Text = (props: TextProps) => {
-  const { children, className, varient = "Body" } = props;
+  const { children, className, varient = "Body", color = "primary" } = props;
   const variantClass = variants[varient] ?? "";
+  const colorClass = colors[color];
   if (varient === "Header1") {
     return (
-      <h1 className={`${variantClass} ${className}`.trim()}>{children}</h1>
+      <h1 className={`${variantClass} ${colorClass} ${className}`.trim()}>
+        {children}
+      </h1>
     );
   } else if (varient === "Header2") {
     return (
-      <h2 className={`${variantClass} ${className}`.trim()}>{children}</h2>
+      <h2 className={`${variantClass} ${colorClass} ${className}`.trim()}>
+        {children}
+      </h2>
     );
   } else {
-    return <p className={`${variantClass} ${className}`.trim()}>{children}</p>;
+    return (
+      <p className={`${variantClass} ${colorClass} ${className}`.trim()}>
+        {children}
+      </p>
+    );
   }
 };
