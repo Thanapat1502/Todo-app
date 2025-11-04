@@ -19,13 +19,17 @@ const useUserStore = create<UserState>((set) => ({
   setUpUser: async () => {
     set({ loading: true });
     try {
+      // Check for token
       const token = useAuthStore.getState().token;
+      // console.log("User Store get token ?? :", token);
+      // NO TOKEN, return Null
       if (!token) {
         console.warn("No access token found.");
         set({ user: null, loading: false });
         return null;
       }
 
+      // HAVE TOKEN, get profile
       const result = await getUserProfile();
       if (result && result.data) {
         set({ user: result.data, loading: false });
@@ -36,7 +40,7 @@ const useUserStore = create<UserState>((set) => ({
         return null;
       }
     } catch (error) {
-      console.warn("Error occor:", error);
+      console.warn("Get Profile Error:", error);
       set({ user: null, loading: false });
       return null;
     }

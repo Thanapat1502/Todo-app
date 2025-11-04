@@ -15,10 +15,9 @@ export function loginService(
         email,
         password,
       });
-      const data = res.data; // should return access token
       //should call model here
-      const result: LoginResponse = new LoginResponse(get(data, "data"));
-      const apiResponse: APIResponse = new APIResponse(get(data, "data"));
+      const result: LoginResponse = new LoginResponse(res);
+      const apiResponse: APIResponse = new APIResponse(res);
       resolve({ token: result.accessToken, ...apiResponse });
     } catch (err) {
       reject(new APIResponse(err));
@@ -31,7 +30,7 @@ export function registerService(
   username: string,
   password: string,
   role: UserRoleEnum
-): Promise<{ token: string }> {
+): Promise<RegisterResponse> {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await api.post("/user/register", {
@@ -40,15 +39,23 @@ export function registerService(
         password,
         role,
       });
-      const data = res.data; // should return access token
+      // const data = res.data; // should return access token
       //should call model here
-      const result: RegisterResponse = new RegisterResponse(get(data, "data"));
-      const apiResponse: APIResponse = new APIResponse(get(data, "data"));
-      resolve({ token: result.accessToken, ...apiResponse });
+      const result: RegisterResponse = new RegisterResponse(res.data);
+      const apiResponse: APIResponse = new APIResponse(res);
+      // console.log("Service Debug");
+      // console.log("Service Register Response:", res);
+      // console.log("______________________________________");
+      // console.log("Service Register Result:", result);
+      // console.log("______________________________________");
+      // console.log("Service Register API Response:", apiResponse);
+      // console.log("______________________________________");
+      // console.log("Service Debug");
+      resolve({ ...result, ...apiResponse });
     } catch (err) {
-      // console.log("Error on Service-------------------------------:");
-      // console.log(err);
-      // console.log("-------------------------------:");
+      console.log("Error on Service-------------------------------:");
+      console.log(err);
+      console.log("-------------------------------:");
       reject(new APIResponse(err));
     }
   });

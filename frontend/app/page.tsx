@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { AppTitle } from "@/components/share/AppTitle";
 import { UnauthenticatedManul } from "@/components/ui/home/UnauthenticatedManul";
+import { AppBodyUi } from "@/components/ui/home/AppBodyUi";
 import { MainLayout } from "@/components/common/MainLayout";
 import { Text } from "@/components/share/Text";
 import { RegisterButton } from "@/components/ui/home/RegisterButton";
@@ -12,18 +13,11 @@ import { CustomFrame } from "@/components/common/CustomFrame";
 
 export default function Home() {
   return (
-    // <main className="flex flex-col items-center justify-center gap-7">
     <MainLayout>
-      <CustomFrame>
+      <CustomFrame className="flex flex-col gap-7">
         <AppTitle className="w-full" />
-        <UnauthenticatedManul />
-        <RegisterButton />
-        <div className="flex justify-center items-center">
-          <Text>Already have an account? 👉</Text>
-          <InlineLoginButton />
-        </div>
+        <AppBodyUi />
       </CustomFrame>
     </MainLayout>
-    // </main>
   );
 }

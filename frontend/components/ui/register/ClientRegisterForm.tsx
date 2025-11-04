@@ -51,8 +51,10 @@ export const ClientRegisterForm = () => {
     };
 
     const result = await registerUser(userData);
-    if (result && result.token) {
-      setUpUser();
+    console.log("Register Result:", result);
+    if (result && result.userId) {
+      console.log("Register successful");
+      redirect("/login");
     }
   };
 

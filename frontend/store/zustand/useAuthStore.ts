@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { UserRoleEnum } from "@/common/enum/user-role.enum";
 import { registerService } from "@/services/authService";
 import { loginService } from "@/services/authService";
+import RegisterRespond from "@/common/model/auth/register.model";
 
 export type UserData = {
   email: string;
@@ -16,9 +17,11 @@ interface AuthState {
   registerSuccess: string | null;
   clearRegisterError: () => void;
   clearRegisterSuccess: () => void;
-  registerUser: (userData: UserData) => Promise<{ token: string } | null>;
+  registerUser: (userData: UserData) => Promise<RegisterRespond | null>;
 
   isInitialized: boolean;
+  signInError: string | null;
+  clearSignInError: () => void;
   signIn: (email: string, password: string) => Promise<string | null>; // get
   autoSignIn: () => Promise<void>;
   signOut: () => void;
@@ -40,9 +43,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
       try {
         const result = await registerService(email, username, password, role);
         console.log("CATCH Rigister Result:", result);
-        set({ token: result.token });
         set({ registerSuccess: "Register Success!" });
-        return { token: result.token };
+        return result;
       } catch (err) {
         console.error("CATCH Rigister Error:", err);
         set({ registerError: err.message });
@@ -55,37 +57,53 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
   //For Sign-In & Sign-Out
   isInitialized: false,
+  signInError: null,
+  clearSignInError: () => set({ signInError: null }),
   signIn: async (email, password) => {
     try {
       const data = await loginService(email, password);
-      console.log("data:", data);
+      // console.log("CATCH Login Result:", data);
       if (data) {
+        // Login Successful Case
         const token = typeof data === "string" ? data : data.token ?? data;
         set({ token });
+        localStorage.setItem("token", token);
         return token;
       } else {
-        console.warn("No token found.");
+        // console.log("No token found.");
+        localStorage.removeItem("token");
         set({ token: null });
         return null;
       }
     } catch (err) {
-      console.log(err);
+      localStorage.removeItem("token");
+      if (err.statusCode && err.statusCode === 401) {
+        set({ signInError: "Invalid email or password." });
+        set({ token: null });
+        return null;
+      }
+      set({ signInError: err.message });
       set({ token: null });
-
       return null;
     }
   },
   autoSignIn: async () => {
     const token = localStorage.getItem("token");
+    console.log("AUTO SIGNIN INITIATED **** ---- **** ---- ***");
+    console.log("TOKEN:", token);
     if (get().isInitialized) return; //call only one time
-
     if (token) {
+      console.log("AUTO SIGNIN AUHORIZATION **** **** ***");
       set({ token, isInitialized: true });
     } else {
-      set({ token: null, isInitialized: false });
+      console.log("AUTO SIGNIN NO TOKEN FOUND ---- ----");
+      set({ token: null, isInitialized: true });
     }
   },
-  signOut: () => set({ token: null }),
+  signOut: () => {
+    localStorage.removeItem("token");
+    set({ token: null });
+  },
 }));
 
 export default useAuthStore;

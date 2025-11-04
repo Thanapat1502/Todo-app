@@ -1,12 +1,16 @@
 import get from "lodash/get";
 
 class RegisterRespond {
-  accessToken: string;
   userId: string;
+  email: string;
+  username: string;
+  createdAt: string;
 
   constructor(json: unknown) {
-    this.accessToken = get(json, "accessToken", "");
-    this.userId = get(json, "userId", "");
+    this.userId = get(json, "id", "");
+    this.email = get(json, "email", "");
+    this.username = get(json, "username", "");
+    this.createdAt = get(json, "createdAt", "");
   }
 }
 

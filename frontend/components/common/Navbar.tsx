@@ -6,11 +6,13 @@ import useAppStore from "@/store/zustand/useAppStore";
 import useAuthStore from "@/store/zustand/useAuthStore";
 import { useEffect } from "react";
 import useUserStore from "@/store/zustand/useUserStore";
+import { AuthenticatedNavbar } from "../ui/navbar/AuthenticatedNavbar";
+import { UnauthenticatedNavbar } from "../ui/navbar/UnauthenticatedNavbar";
 
 export const Navbar = () => {
-  const { token, autoSignIn } = useAuthStore();
+  // const { token, autoSignIn } = useAuthStore();
   const { loading, setLoading } = useAppStore();
-  const { setUpUser } = useUserStore();
+  const { user } = useUserStore();
 
   const redirectToRegister = () => {
     redirect("/register");
@@ -20,14 +22,8 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="flex flex-1 justify-end p-10 right-0 gap-4 bg-gray-500 w-full">
-      {loading ? <div>Loading...</div> : null}
-      <CustomButton onClick={redirectToRegister} variant="link">
-        <Text varient="Button">Register</Text>
-      </CustomButton>
-      <CustomButton onClick={handleLogin}>
-        <Text varient="Button">Login</Text>
-      </CustomButton>
+    <nav className="flex flex-1 justify-end py-4 px-10 right-0 gap-4 bg-gray-500 w-full">
+      {user ? <AuthenticatedNavbar /> : <UnauthenticatedNavbar />}
     </nav>
   );
 };

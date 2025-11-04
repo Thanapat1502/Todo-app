@@ -42,7 +42,7 @@ class APIResponse {
     // ✅ 2. ถ้าเป็น Axios success (response ปกติ)
     if (input?.data) {
       this.statusCode = get(input, "data.status", 200);
-      this.message = get(input, "data.message", this.message);
+      this.message = get(input, "data.message", "Success");
       return;
     }
 

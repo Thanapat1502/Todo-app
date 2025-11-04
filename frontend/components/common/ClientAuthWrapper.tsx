@@ -23,8 +23,8 @@ export default function ClientAuthWrapper({
 
   useEffect(() => {
     //check for token on store, if have one, will auto setupUser()
-    const accessToken = token;
     setLoading(true);
+    const accessToken = token;
     if (accessToken) {
       setUpUser();
     }

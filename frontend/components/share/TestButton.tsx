@@ -7,13 +7,13 @@ type TestButtonProps = {
 };
 
 export const TestButton = (props: TestButtonProps) => {
-  const { onClick, color, label } = props;
+  const { onClick, color = "red", label } = props;
 
   return (
     <CustomButton
       type="button"
       onClick={onClick}
-      className={`bg-red-500 bg-${color}-500 hover:bg-${color}-600}`}>
+      className={`bg-${color}-500 hover:bg-${color}-600}`}>
       {label ? label : "Test Button"}
     </CustomButton>
   );

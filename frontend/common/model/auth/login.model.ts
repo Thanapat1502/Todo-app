@@ -4,7 +4,7 @@ class LoginResponse {
   accessToken: string;
 
   constructor(json: unknown) {
-    this.accessToken = get(json, "accessToken", "");
+    this.accessToken = get(json, "data.access_token", "");
   }
 }
 

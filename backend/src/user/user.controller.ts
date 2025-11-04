@@ -6,11 +6,12 @@ import {
   Param,
   UseInterceptors,
   ClassSerializerInterceptor,
-  // Get,
-  // Patch,
-  // Param,
-  // Delete,
+  UseGuards,
+  NotFoundException,
+  UnauthorizedException,
+  Request,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { RegisterDTO } from './dto/register.dto';
@@ -23,6 +24,13 @@ export class UserController {
   @Post('register')
   create(@Body() registerDOT: RegisterDTO) {
     return this.userService.register(registerDOT);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('profile')
+  getProfile(@Request() req: any) {
+    const userId = req.user?.userId as number;
+    return this.userService.findProfile(userId);
   }
 
   @Get(':email')

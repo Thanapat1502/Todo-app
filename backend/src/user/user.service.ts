@@ -4,6 +4,8 @@ import {
   ConflictException,
   UseInterceptors,
   ClassSerializerInterceptor,
+  UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -44,6 +46,14 @@ export class UserService {
   @UseInterceptors(ClassSerializerInterceptor)
   async findByEmail(email: string) {
     return this.repo.findOne({ where: { email } });
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  async findProfile(userId: number) {
+    const result = await this.repo.findOne({ where: { id: userId } });
+    if (!result) throw new NotFoundException('User not found');
+    if (result.id !== userId) throw new UnauthorizedException('Unauthorized');
+    return result;
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
