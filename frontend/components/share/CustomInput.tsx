@@ -4,11 +4,12 @@ import React, { InputHTMLAttributes } from "react";
 
 export type CustomInputProps = InputHTMLAttributes<HTMLInputElement> & {
   containerClassname?: string;
+  inputClassname?: string;
   id: string;
   label?: string;
 };
 const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ label, id, containerClassname, ...props }, ref) => {
+  ({ label, id, containerClassname, inputClassname, ...props }, ref) => {
     return (
       <div className={`flex flex-col gap-1 ${containerClassname ?? ""}`}>
         {label && (
@@ -20,7 +21,9 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
           id={id}
           ref={ref}
           {...props} // ensures name, onChange, onBlur, value, etc. are passed through
-          className="px-3 py-2 border rounded focus:outline-none focus:ring"
+          className={`px-3 py-2 border rounded focus:outline-none focus:ring ${
+            inputClassname ?? ""
+          }`}
         />
       </div>
     );

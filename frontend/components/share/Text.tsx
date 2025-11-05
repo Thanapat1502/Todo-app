@@ -10,6 +10,7 @@ const variants = {
   Time: "text-[14px] leading-[20px] font-normal italic",
   Remark: "text-[14px] leading-[20px] font-normal italic",
   Timestamp: "text-[12px] leading-[20px] font-normal italic",
+  TaskItem: "text-2xl font-semibold",
 };
 
 const colors = {
@@ -19,8 +20,8 @@ const colors = {
   warning: "text-yellow-500",
   danger: "text-red-600",
   info: "text-gray-700",
-  light: "text-black",
-  dark: "text-white",
+  black: "text-black",
+  white: "text-white",
 };
 
 type VariantKey = keyof typeof variants;

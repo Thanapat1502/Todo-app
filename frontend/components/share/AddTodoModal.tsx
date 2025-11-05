@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/base/dialog";
 import CustomInput from "./CustomInput";
+import { Text } from "./Text";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useTaskStore from "@/store/zustand/useTaskStore";
@@ -52,7 +53,7 @@ export function AddTodoModal() {
       {/** Display Trigger button */}
       <DialogTrigger asChild>
         <CustomButton variant="default" className="w-full" type="button">
-          + Add new todo
+          <Text color="white">+ Add new todo</Text>
         </CustomButton>
       </DialogTrigger>
 
