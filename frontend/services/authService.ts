@@ -39,18 +39,8 @@ export function registerService(
         password,
         role,
       });
-      // const data = res.data; // should return access token
-      //should call model here
       const result: RegisterResponse = new RegisterResponse(res.data);
       const apiResponse: APIResponse = new APIResponse(res);
-      // console.log("Service Debug");
-      // console.log("Service Register Response:", res);
-      // console.log("______________________________________");
-      // console.log("Service Register Result:", result);
-      // console.log("______________________________________");
-      // console.log("Service Register API Response:", apiResponse);
-      // console.log("______________________________________");
-      // console.log("Service Debug");
       resolve({ ...result, ...apiResponse });
     } catch (err) {
       console.log("Error on Service-------------------------------:");

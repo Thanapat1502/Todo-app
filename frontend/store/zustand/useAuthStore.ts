@@ -89,14 +89,14 @@ const useAuthStore = create<AuthState>((set, get) => ({
   },
   autoSignIn: async () => {
     const token = localStorage.getItem("token");
-    console.log("AUTO SIGNIN INITIATED **** ---- **** ---- ***");
-    console.log("TOKEN:", token);
+    // console.log("AUTO SIGNIN INITIATED **** ---- **** ---- ***");
+    // console.log("TOKEN:", token);
     if (get().isInitialized) return; //call only one time
     if (token) {
-      console.log("AUTO SIGNIN AUHORIZATION **** **** ***");
+      // console.log("AUTO SIGNIN AUHORIZATION **** **** ***");
       set({ token, isInitialized: true });
     } else {
-      console.log("AUTO SIGNIN NO TOKEN FOUND ---- ----");
+      // console.log("AUTO SIGNIN NO TOKEN FOUND ---- ----");
       set({ token: null, isInitialized: true });
     }
   },

@@ -12,8 +12,9 @@ export const TestButton = (props: TestButtonProps) => {
   return (
     <CustomButton
       type="button"
-      onClick={onClick}
-      className={`bg-${color}-500 hover:bg-${color}-600}`}>
+      // className={`bg-${color}-500 hover:bg-${color}-600}`}
+      className="bg-amber-400 hover:bg-amber-500"
+      onClick={onClick}>
       {label ? label : "Test Button"}
     </CustomButton>
   );

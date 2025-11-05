@@ -4,5 +4,5 @@ export const CustomFrame = (props: {
   className?: string;
 }) => {
   const { children, className } = props;
-  return <div className={`lg:w-1/3 ${className}`}>{children}</div>;
+  return <div className={`w-full lg:w-1/3 ${className}`}>{children}</div>;
 };

@@ -18,16 +18,15 @@ export const CustomButton = ({
   ...props
 }: ShadcnButtonProps & CustomButtonProps) => {
   const defaultClassname =
-    "bg-teal-500 border border-white hover:bg-teal-600 hover:border-gray-100";
+    "bg-teal-500 border border-white hover:bg-teal-600 hover:border-gray-100 hover:cursor-pointer";
   return (
     <Button
       onClick={onClick}
       variant={variant}
       size={size}
       disabled={isLoading}
-      className={`${
-        variant === "default" && defaultClassname
-      } ${className} hover:cursor-pointer`}>
+      className={`${variant === "default" && defaultClassname} ${className}`}
+      {...props}>
       {enableLoading && isLoading && <Spinner />}
       {children}
     </Button>

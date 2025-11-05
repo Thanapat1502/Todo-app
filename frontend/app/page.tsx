@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { AppTitle } from "@/components/share/AppTitle";
 import { UnauthenticatedManul } from "@/components/ui/home/UnauthenticatedManul";
+import { AuthenticatedApp } from "@/components/ui/home/AuthenticatedApp";
 import { AppBodyUi } from "@/components/ui/home/AppBodyUi";
 import { MainLayout } from "@/components/common/MainLayout";
-import { Text } from "@/components/share/Text";
-import { RegisterButton } from "@/components/ui/home/RegisterButton";
-import { InlineLoginButton } from "@/components/ui/home/InlineLoginButton";
 import { CustomFrame } from "@/components/common/CustomFrame";
 // import useAppStore from "@/store/zustand/useAppStore";
 // import useAuthStore from "@/store/zustand/useAuthStore";
@@ -16,7 +14,9 @@ export default function Home() {
     <MainLayout>
       <CustomFrame className="flex flex-col gap-7">
         <AppTitle className="w-full" />
-        <AppBodyUi />
+        {/* <UnauthenticatedManul /> */}
+        <AuthenticatedApp />
+        {/* <AppBodyUi /> */}
       </CustomFrame>
     </MainLayout>
   );
