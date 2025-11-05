@@ -77,7 +77,7 @@ export function AddTodoModal() {
                 {...register("todoItem")}
                 id="todoItem"
                 type="text"
-                placeholder="Add your new task here."
+                placeholder="What do you wanna do today?"
               />
             </div>
           </div>

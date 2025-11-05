@@ -1,33 +1,32 @@
 "use client";
-import { CustomButton } from "@/components/share/CustomButton";
-import { Text } from "@/components/share/Text";
 import { TaskItem } from "../todopage/TodoItem";
 import { AddTodoModal } from "@/components/share/AddTodoModal";
-import { TestButton } from "@/components/share/TestButton";
 import useTaskStore from "@/store/zustand/useTaskStore";
 import { useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 export const AuthenticatedApp = () => {
   const { tasksList, getTaskList } = useTaskStore();
-  const addTodo = () => {};
   useEffect(() => {
     getTaskList();
   }, []);
 
   return (
-    <div className=" flex flex-col justify-center items-center gap-7">
-      {tasksList.map((item) => (
-        <TaskItem key={item.id} item={item} />
-      ))}
+    <div className="flex flex-col justify-center items-center gap-7">
+      <AnimatePresence>
+        {tasksList.map((item) => (
+          <motion.div
+            className="flex-1 w-full"
+            key={item.id}
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, x: -40, scale: 0.9 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}>
+            <TaskItem key={item.id} item={item} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
       <AddTodoModal />
-      {/* <TestButton
-        label="Log Task"
-        onClick={() => {
-          console.log("Task List :===>");
-          console.log(tasksList);
-          console.log("<================>");
-        }}
-      /> */}
     </div>
   );
 };

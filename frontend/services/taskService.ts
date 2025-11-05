@@ -60,3 +60,36 @@ export function editTaskService(
     }
   });
 }
+
+export function toggleTaskStatusService(
+  taskId: number,
+  newStatus: TaskStatusEnum
+): Promise<APIResponse> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await api.patch(`/items/status/${taskId}`, {
+        status: newStatus,
+      });
+
+      const result = new APIResponse(res);
+      console.log("Toggle Status Respond");
+      console.log(result);
+      console.log("Status--------------");
+      resolve(result);
+    } catch (err) {
+      reject(new APIResponse(err));
+    }
+  });
+}
+
+export function deleteTaskService(taskId: number): Promise<APIResponse> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await api.delete(`/items/delete/${taskId}`);
+      const result = new APIResponse(res);
+      resolve(result);
+    } catch (err) {
+      reject(new APIResponse(err));
+    }
+  });
+}

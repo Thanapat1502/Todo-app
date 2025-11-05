@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "@/components/share/Text";
 import { CustomButton } from "@/components/share/CustomButton";
 import {
@@ -11,11 +11,12 @@ import {
   DropdownMenuPortal,
 } from "@/components/base/dropdown-menu";
 import { MoreVertical, Edit2Icon, Trash2 } from "lucide-react";
-// import { motion, AnimatePresence } from "framer-motion";
 import { motion, AnimatePresence } from "motion/react";
 import TaskModel from "@/common/model/task/task.model";
 import { TaskStatusEnum } from "@/common/enum/task-status.enum";
 import { EditTodoItemDialog } from "@/components/ui/todopage/EditTodoItemDialog";
+import useTaskStore from "@/store/zustand/useTaskStore";
+import useAppStore from "@/store/zustand/useAppStore";
 
 type TodoItemProps = {
   item: TaskModel;
@@ -25,14 +26,23 @@ type TodoItemProps = {
 export const TaskItem = ({ item, className }: TodoItemProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
-
   const toggleActive = () => setIsActive(!isActive);
+  const { toggleStatus, loadingTask, deleteLoading, removeTask } =
+    useTaskStore();
+  // const { isLoading, setLoading } = useAppStore();
 
-  const handleDone = () => {};
+  const handleDone = () => {
+    toggleStatus(item);
+    toggleActive();
+  };
   const handleEdit = () => {
     setModalOpen(true);
   };
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    if (deleteLoading) return;
+    removeTask(item.id);
+  };
+
   return (
     <div className={`relative flex items-center gap-2 w-full ${className}`}>
       {/* ปุ่ม Task หลัก */}
@@ -40,13 +50,22 @@ export const TaskItem = ({ item, className }: TodoItemProps) => {
       <div className="flex flex-row w-full justify-center items-center py-1 border-2 rounded-2xl">
         <CustomButton
           variant={"ghost"}
-          className="flex flex-1 w-full h-auto justify-between border-0"
+          className="flex flex-1 w-full h-auto justify-between border-0 hover:bg-white hover:cursor-pointer"
           onClick={toggleActive}>
-          <Text
-            varient="Subtitle"
-            className="flex-1 text-start whitespace-normal">
+          <motion.p
+            className="flex-1 text-start whitespace-normal text-[17px] leading-[26px] font-semibold"
+            initial={false}
+            animate={{
+              textDecoration:
+                item.status === TaskStatusEnum.DONE ? "line-through" : "none",
+              color:
+                item.status === TaskStatusEnum.DONE ? "#9ca3af" : "#111827", // เทาเมื่อ done
+              opacity: item.status === TaskStatusEnum.DONE ? 0.7 : 1,
+              scale: item.status === TaskStatusEnum.DONE ? 0.98 : 1,
+            }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}>
             {item.item_name}
-          </Text>
+          </motion.p>
         </CustomButton>
         {/* Dropdown Menu */}
         <DropdownMenu>
@@ -55,6 +74,7 @@ export const TaskItem = ({ item, className }: TodoItemProps) => {
             <CustomButton
               variant="ghost"
               size="icon"
+              className="hover:bg-white hover:cursor-pointer"
               onClick={(e) => e.stopPropagation()} // กันการ toggle หลัก
             >
               <MoreVertical className="h-4 w-4" />
@@ -63,11 +83,11 @@ export const TaskItem = ({ item, className }: TodoItemProps) => {
           {/**Dropdown main menu */}
           <DropdownMenuPortal>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleEdit()}>
+              <DropdownMenuItem onClick={handleEdit}>
                 <Edit2Icon className="h-4 w-4 mr-2" />
                 <Text>Edit</Text>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDelete()}>
+              <DropdownMenuItem disabled={deleteLoading} onClick={handleDelete}>
                 <Trash2 className="h-4 w-4 mr-2 text-red-500" />
                 <Text className="text-red-500">Delete</Text>
               </DropdownMenuItem>
@@ -93,6 +113,8 @@ export const TaskItem = ({ item, className }: TodoItemProps) => {
                   ? `bg-amber-400`
                   : `bg-teal-500`
               }`}
+              disabled={loadingTask}
+              isLoading={loadingTask}
               onClick={handleDone}>
               <Text color="white">
                 {item.status === TaskStatusEnum.DONE ? "PENDING" : "DONE!"}

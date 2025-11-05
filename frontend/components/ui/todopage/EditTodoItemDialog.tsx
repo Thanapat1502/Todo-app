@@ -67,7 +67,7 @@ export function EditTodoItemDialog(prosp: {
           noValidate>
           {/** Act as title of modal box */}
           <DialogHeader className="flex justify-center items-start">
-            <DialogTitle>Edit your task: {oldTaskId}</DialogTitle>
+            <DialogTitle>Edit your task</DialogTitle>
             <DialogDescription>Edit your task here.</DialogDescription>
           </DialogHeader>
 
