@@ -17,7 +17,10 @@ export class ItemsService {
   ) {}
 
   async findMyItems(userId: number) {
-    return await this.repo.find({ where: { user_id: userId } });
+    return await this.repo.find({
+      where: { user_id: userId },
+      order: { created_at: 'DESC' },
+    });
   }
 
   createNewItem(createItemDto: CreateItemDto, userId: number) {

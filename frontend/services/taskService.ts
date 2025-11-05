@@ -42,18 +42,19 @@ export function addTaskService(taskName: string): Promise<APIResponse> {
 export function editTaskService(
   taskId: number,
   newTask: string
-): Promise<void> {
+): Promise<APIResponse> {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await api.get(`/items/my-items/${taskId}`, {
-        params: {
-          item_name: newTask,
-        },
+      const res = await api.patch(`/items/edit/${taskId}`, {
+        item_name: newTask,
       });
 
+      const result = new APIResponse(res);
       console.log("Edit Respond");
-      console.log(res);
-      resolve();
+      console.log(result);
+      console.log("Edit--------------");
+
+      resolve(result);
     } catch (err) {
       reject(new APIResponse(err));
     }

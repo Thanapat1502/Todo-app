@@ -15,6 +15,7 @@ import { MoreVertical, Edit2Icon, Trash2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import TaskModel from "@/common/model/task/task.model";
 import { TaskStatusEnum } from "@/common/enum/task-status.enum";
+import { EditTodoItemDialog } from "@/components/ui/todopage/EditTodoItemDialog";
 
 type TodoItemProps = {
   item: TaskModel;
@@ -23,11 +24,14 @@ type TodoItemProps = {
 
 export const TaskItem = ({ item, className }: TodoItemProps) => {
   const [isActive, setIsActive] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleActive = () => setIsActive(!isActive);
 
   const handleDone = () => {};
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    setModalOpen(true);
+  };
   const handleDelete = () => {};
   return (
     <div className={`relative flex items-center gap-2 w-full ${className}`}>
@@ -97,6 +101,13 @@ export const TaskItem = ({ item, className }: TodoItemProps) => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <EditTodoItemDialog
+        isOpen={isModalOpen}
+        setIsOpen={setModalOpen}
+        oldTaskName={item.item_name}
+        oldTaskId={item.id}
+      />
     </div>
   );
 };
