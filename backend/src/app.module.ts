@@ -11,7 +11,7 @@ import { AdminModule } from './admin/admin.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres', // หรือ mysql
-      host: 'localhost',
+      host: 'db',
       port: 5432,
       username: 'postgres',
       password: 'postgres',

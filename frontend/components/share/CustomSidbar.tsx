@@ -48,9 +48,7 @@ export const CustomSidebar = (props: CustomsidbarProps) => {
           <SidebarGroupContent>
             <SidebarMenu>
               {menus.map((menu, index) => {
-                const isActive =
-                  pathName === menu.href ||
-                  (menu.href !== defaultPath && pathName.startsWith(menu.href));
+                const isActive = pathName === menu.href;
                 return (
                   <SidebarMenuItem key={index}>
                     <SidebarMenuButton asChild>

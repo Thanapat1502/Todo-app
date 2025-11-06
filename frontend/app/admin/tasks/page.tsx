@@ -5,8 +5,10 @@ import { CustomFrame } from "@/components/common/CustomFrame";
 import { CustomTable } from "@/components/share/CustomTable";
 import { useEffect } from "react";
 import useAdminStore from "@/store/zustand/useAdminStore";
+import { Column } from "@/components/share/CustomTable";
+import TaskModel from "@/common/model/task/task.model";
 
-const columns = [
+const columns: Column<TaskModel>[] = [
   { key: "id", label: "ID" },
   { key: "item_name", label: "Task Name" },
   { key: "user_id", label: "Owner Id" },

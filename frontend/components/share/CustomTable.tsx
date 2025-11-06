@@ -10,7 +10,7 @@ import {
 } from "@/components/base/table";
 import { cn } from "@/lib/utils";
 
-type Column<T> = {
+export type Column<T> = {
   key: keyof T;
   label: string;
   className?: string;

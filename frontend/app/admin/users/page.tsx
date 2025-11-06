@@ -6,8 +6,10 @@ import useAdminStore from "@/store/zustand/useAdminStore";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { CustomBreadcrumd } from "@/components/share/CustomBreadCrumb";
+import { Column } from "@/components/share/CustomTable";
+import UserModel from "@/common/model/user/user.model";
 
-const columns = [
+const columns: Column<UserModel>[] = [
   { key: "id", label: "ID" },
   { key: "username", label: "User Name" },
   { key: "email", label: "Email" },

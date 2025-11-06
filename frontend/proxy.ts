@@ -13,12 +13,21 @@ export function proxy(req: NextRequest) {
 
   try {
     // const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    const decoded = jwt.verify(token, "secret123");
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET ||
+        "your-super-secret-and-long-key-at-least-32-chars"
+    );
     // console.log(
     //   "---------------------------Proxy Middleware----------------------------"
     // );
     // console.log("Token decoded:", decoded);
-    if (decoded.role !== UserRoleEnum.ADMIN) {
+    if (
+      typeof decoded === "object" &&
+      decoded !== null &&
+      "role" in decoded &&
+      decoded.role !== UserRoleEnum.ADMIN
+    ) {
       return NextResponse.redirect(new URL("/", req.url));
     }
     // else {

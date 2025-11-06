@@ -47,7 +47,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
         return result;
       } catch (err) {
         console.error("CATCH Rigister Error:", err);
-        set({ registerError: err.message });
+        set({ registerError: (err as Error).message });
         return null;
       }
     }

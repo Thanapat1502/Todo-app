@@ -1,25 +1,29 @@
 version: "3.8"
 
 services:
-  # frontend:
-  #   build: ./frontend
-  #   container_name: next_app
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NEXT_PUBLIC_API_URL=http://localhost:4000
-  #   depends_on:
-  #     - backend
+  frontend:
+    build: ./frontend
+    container_name: next_app
+    ports:
+      - "3000:3000"
+    environment:
+      # - NEST_PUBLIC_API_URL=http://backend:4000
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      - JWT_SECRET=your-super-secret-and-long-key-at-least-32-chars
+    depends_on:
+      - backend
 
-  # backend:
-  #   build: ./backend
-  #   container_name: nest_api
-  #   ports:
-  #     - "4000:4000"
-  #   environment:
-  #     - DATABASE_URL=postgresql://postgres:postgres@db:5432/app_db
-  #   depends_on:
-  #     - db
+  backend:
+    build: ./backend
+    container_name: nest_api
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/app_db
+      - JWT_SECRET=your-super-secret-and-long-key-at-least-32-chars
+    depends_on:
+      - db
 
   db:
     image: postgres:15
