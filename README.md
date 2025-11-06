@@ -36,6 +36,7 @@
 
 ## 📁 Project Structure
 
+```
 project-root/
 │
 ├── backend/ # NestJS backend
@@ -54,6 +55,7 @@ project-root/
 │
 ├── docker-compose.yml
 └── README.md
+```
 
 ---
 
