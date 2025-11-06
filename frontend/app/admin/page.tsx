@@ -3,12 +3,12 @@ import { AppBodyUi } from "@/components/ui/home/AppBodyUi";
 import { MainLayout } from "@/components/common/MainLayout";
 import { CustomFrame } from "@/components/common/CustomFrame";
 
-export default function Home() {
+export default function AdminDashboard() {
   return (
     <MainLayout>
       <CustomFrame className="flex flex-col gap-7">
-        <AppTitle title="Todo!" className="w-full" />
-        <AppBodyUi />
+        <AppTitle title="Welcome Admin" className="w-full" />
+        {/* <AppBodyUi /> */}
       </CustomFrame>
     </MainLayout>
   );
