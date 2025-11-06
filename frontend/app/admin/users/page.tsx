@@ -1,11 +1,11 @@
 "use client";
 import { AppTitle } from "@/components/share/AppTitle";
 import { MainLayout } from "@/components/common/MainLayout";
-import { CustomFrame } from "@/components/common/CustomFrame";
 import { CustomTable } from "@/components/share/CustomTable";
 import useAdminStore from "@/store/zustand/useAdminStore";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
+import { CustomBreadcrumd } from "@/components/share/CustomBreadCrumb";
 
 const columns = [
   { key: "id", label: "ID" },
@@ -25,6 +25,7 @@ export default function AllUsersPage() {
   return (
     <MainLayout>
       <div className="flex flex-col gap-7 w-full">
+        <CustomBreadcrumd prePageTitle="All Users" backUrl="/admin/users" />
         <AppTitle title="All User Page" className="w-full" />
         <CustomTable
           columns={columns}

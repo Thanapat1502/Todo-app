@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { Home, Users, ListTodo, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../base/button";
+import { CustomButton } from "./CustomButton";
 import { MenuSquareIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -77,10 +78,13 @@ export const CustomSidebar = (props: CustomsidbarProps) => {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <button className="flex items-center gap-2 w-full text-sm font-medium text-red-500 hover:bg-red-50 px-3 py-2 rounded-md">
+              <CustomButton
+                className="flex items-center gap-2 w-full text-sm font-medium text-red-500 hover:bg-red-500 hover:text-white px-3 py-2 rounded-md cursor-pointer"
+                variant="ghost"
+                onClick={lastMenu.onClick}>
                 <lastMenu.icon className="w-4 h-4" />
                 {lastMenu.label}
-              </button>
+              </CustomButton>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

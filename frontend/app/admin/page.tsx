@@ -1,15 +1,14 @@
 import { AppTitle } from "@/components/share/AppTitle";
-import { AppBodyUi } from "@/components/ui/home/AppBodyUi";
 import { MainLayout } from "@/components/common/MainLayout";
-import { CustomFrame } from "@/components/common/CustomFrame";
+import { AdminManual } from "@/components/ui/admin/AdminManual";
 
 export default function AdminDashboard() {
   return (
     <MainLayout>
-      <CustomFrame className="flex flex-col gap-7">
+      <div className="flex flex-col gap-7 w-full">
         <AppTitle title="Welcome Admin" className="w-full" />
-        {/* <AppBodyUi /> */}
-      </CustomFrame>
+        <AdminManual />
+      </div>
     </MainLayout>
   );
 }
