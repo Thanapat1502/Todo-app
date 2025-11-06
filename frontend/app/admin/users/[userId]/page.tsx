@@ -1,9 +1,12 @@
+"use client";
 import { AppTitle } from "@/components/share/AppTitle";
 import { MainLayout } from "@/components/common/MainLayout";
 import { CustomFrame } from "@/components/common/CustomFrame";
+import { useParams } from "next/navigation";
 
-export default function AllItemOfThisUserPage({ params }) {
-  const { userId } = params;
+export default function AllItemOfThisUserPage() {
+  const params = useParams();
+  const userId = params.userId;
 
   return (
     <MainLayout>

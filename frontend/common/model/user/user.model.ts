@@ -5,6 +5,7 @@ class UserModel {
   id: string;
   email: string;
   username: string;
+  createdAt: string;
   role: UserRoleEnum;
 
   constructor(json: unknown) {
@@ -12,6 +13,7 @@ class UserModel {
     this.email = get(json, "email", "");
     this.username = get(json, "username", "");
     this.role = get(json, "role", UserRoleEnum.USER);
+    this.createdAt = get(json, "createdAt", "");
   }
 }
 
