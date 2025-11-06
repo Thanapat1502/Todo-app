@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text } from "@/components/share/Text";
 import { CustomButton } from "@/components/share/CustomButton";
 import {
@@ -16,7 +16,6 @@ import TaskModel from "@/common/model/task/task.model";
 import { TaskStatusEnum } from "@/common/enum/task-status.enum";
 import { EditTodoItemDialog } from "@/components/ui/todopage/EditTodoItemDialog";
 import useTaskStore from "@/store/zustand/useTaskStore";
-import useAppStore from "@/store/zustand/useAppStore";
 
 type TodoItemProps = {
   item: TaskModel;

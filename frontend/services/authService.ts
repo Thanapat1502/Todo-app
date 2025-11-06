@@ -8,17 +8,27 @@ import { UserRoleEnum } from "@/common/enum/user-role.enum";
 export function loginService(
   email: string,
   password: string
-): Promise<{ token: string }> {
+): Promise<LoginResponse> {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await api.post(
+        "/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       //should call model here
       const result: LoginResponse = new LoginResponse(res);
       const apiResponse: APIResponse = new APIResponse(res);
-      resolve({ token: result.accessToken, ...apiResponse });
+      resolve({
+        loginMessage: result.loginMessage,
+        token: result.token,
+        ...apiResponse,
+      });
     } catch (err) {
       reject(new APIResponse(err));
     }

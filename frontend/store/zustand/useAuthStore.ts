@@ -22,8 +22,8 @@ interface AuthState {
   isInitialized: boolean;
   signInError: string | null;
   clearSignInError: () => void;
-  signIn: (email: string, password: string) => Promise<string | null>; // get
-  autoSignIn: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<string | null>; // get token
+  autoSignIn: () => Promise<void>; // read token and auto login on web loading
   signOut: () => void;
 }
 

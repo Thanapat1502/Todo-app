@@ -1,10 +1,12 @@
 import get from "lodash/get";
 
 class LoginResponse {
-  accessToken: string;
+  loginMessage: string;
+  token: string;
 
   constructor(json: unknown) {
-    this.accessToken = get(json, "data.access_token", "");
+    this.loginMessage = get(json, "data.message", "");
+    this.token = get(json, "data.access_token", "");
   }
 }
 
