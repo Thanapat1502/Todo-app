@@ -1,54 +1,36 @@
-<!-- # 🛒 Shopping Todo App (NestJS + Next.js + Docker)
-
-A small fullstack web app built to demonstrate modern web development stack.
-
-## Tech Stack
-- Frontend: Next.js + TailwindCSS
-- Backend: NestJS + Prisma + PostgreSQL
-- Containerization: Docker & Docker Compose
-
-## Features
-- User: Register, Add/Delete shopping items
-- Admin: View all users and their items
-
-## Run Locally
-```bash
-git clone ...
-docker-compose up --build -->
-
 # 🧩 Todo App (Full-Stack NestJS + NextJS + Docker)
 
-> A small-scale **Todo management app** built for learning purposes — focusing on understanding backend structure with **NestJS**, authentication with **Passport + Cookies**, and containerization via **Docker**.
+> A small-scale **Todo management app** built for learning and demonstration — focusing on backend design with **NestJS**, authentication via **Passport + Cookies**, and full containerization with **Docker**.
 
 ---
 
 ## 🚀 Tech Stack
 
-| Layer           | Technology                                | Description                         |
-| --------------- | ----------------------------------------- | ----------------------------------- |
-| **Frontend**    | [Next.js 14](https://nextjs.org/)         | React-based frontend with SSR/ISR   |
-|                 | [TailwindCSS](https://tailwindcss.com/)   | Utility-first styling               |
-|                 | [shadcn/ui](https://ui.shadcn.com)        | Elegant UI components               |
-| **Backend**     | [NestJS](https://nestjs.com/)             | TypeScript backend framework        |
-|                 | [TypeORM](https://typeorm.io/)            | ORM for SQL databases               |
-|                 | [PassportJS](https://www.passportjs.org/) | Authentication (JWT + Cookies)      |
-| **Database**    | PostgreSQL (SQL)                          | Primary data store                  |
-| **Container**   | [Docker](https://www.docker.com/)         | Containerization for full-stack dev |
-| **Other Tools** | Axios, Zustand                            | API client and state management     |
+| Layer           | Technology                                | Description                       |
+| --------------- | ----------------------------------------- | --------------------------------- |
+| **Frontend**    | [Next.js 14](https://nextjs.org/)         | React-based frontend with SSR     |
+|                 | [TailwindCSS](https://tailwindcss.com/)   | Utility-first CSS framework       |
+|                 | [shadcn/ui](https://ui.shadcn.com)        | Elegant UI components             |
+| **Backend**     | [NestJS](https://nestjs.com/)             | TypeScript backend framework      |
+|                 | [TypeORM](https://typeorm.io/)            | ORM for SQL databases             |
+|                 | [PassportJS](https://www.passportjs.org/) | Authentication (JWT + Cookies)    |
+| **Database**    | [PostgreSQL](https://www.postgresql.org/) | SQL database                      |
+| **Container**   | [Docker](https://www.docker.com/)         | Full-stack containerization       |
+| **State / API** | Zustand + Axios                           | Lightweight state and API manager |
 
 ---
 
 ## 🧠 Project Overview
 
-**Todo App** is a demo full-stack web application that demonstrates:
+**Todo App** is a full-stack demo application demonstrating:
 
-- 🔑 Authentication with JWT (cookie-based)
-- 🧍 Role-based Access Control (User / Admin)
-- ✅ Task management system (CRUD)
-- 🧱 Modular NestJS architecture with services, guards, and interceptors
-- 🖥️ Frontend admin dashboard with sidebar navigation and breadcrumb
-- 💾 Persistent SQL database using TypeORM
-- 🐳 Full Docker support for local development
+- 🔐 Cookie-based JWT authentication
+- 🧍 Role-based access (User / Admin)
+- ✅ Task CRUD management (Add, Edit, Delete, Toggle)
+- 🧱 Modular NestJS structure with services, guards, and repositories
+- 🖥️ Admin dashboard with sidebar navigation and user management
+- 💾 Persistent PostgreSQL database
+- 🐳 Fully containerized using Docker Compose
 
 ---
 
@@ -59,66 +41,127 @@ project-root/
 ├── backend/ # NestJS backend
 │ ├── src/
 │ ├── Dockerfile
-│ └── .env
+│ └── ...
 │
 ├── frontend/ # Next.js frontend
 │ ├── app/
 │ ├── components/
 │ ├── Dockerfile
-│ └── .env
+│ └── ...
+│
+├── db/
+│ └── seed.sql # Sample data for demo (auto-loaded on first run)
 │
 ├── docker-compose.yml
 └── README.md
 
 ---
 
-Setup
+## ⚙️ Quick Start (with Docker)
+
+### 🐳 1. Prerequisites
+
+Make sure you have:
+
+- [Docker](https://www.docker.com/) installed
+- [Docker Compose](https://docs.docker.com/compose/) v2 or newer
 
 ---
 
-🧰 Commands Reference
-Command Description
-npm run dev Run development server
-npm run build Build production version
-npm run start Start production server
-docker-compose up Run all containers
-docker-compose down Stop and remove containers
-🔐 Authentication Flow
+### 🚀 2. Run the app
+
+From the **project root**, run:
+
+```bash
+docker compose up --build
+```
+
+### Docker will automatically:
+
+- Build and start all containers (frontend, backend, db, pgadmin)
+
+- Initialize database with sample data from db/seed.sql
+
+### Once started:
+
+- Frontend → http://localhost:3000
+
+- Backend → http://localhost:4000
+
+- pgAdmin → http://localhost:8080
+  (admin@admin.com
+  / admin)
+
+  ***
+
+### 💾 3. Test Accounts
+
+Role Email Password
+👑 Admin admin1@email.com Passw0rd
+👤 User front3@email.com Passw0rd
+
+---
+
+### 🔧 4. Commands
+
+| Command                   | Description                                   |
+| ------------------------- | --------------------------------------------- |
+| docker compose up --build | Build and start all containers                |
+| docker compose down       | Stop all containers                           |
+| docker compose down -v    | Stop and clear database volume                |
+| docker logs <container>   | View container logs (e.g., backend, frontend) |
+
+---
+
+## 🔐 Authentication Flow
 
 User logs in via /auth/login
 
-Backend issues JWT token and sets it as HTTP-only cookie
+Backend validates credentials → issues JWT
 
-Frontend stores role & minimal session info in Zustand (for UI)
+Token is stored as HTTP-only cookie
 
-Middleware protects /admin route using cookie validation
+Middleware and guards validate cookies on protected routes
 
-🧭 Features Summary
+Frontend stores minimal session info in Zustand for UI rendering
 
-📝 Add, edit, delete tasks
+---
 
-✅ Toggle task status (Pending / Done)
+## 🧭 Features Summary
 
-🎨 Smooth animation for task update and delete
+📝 Add, edit, delete, toggle tasks
 
-🧍 Admin dashboard with sidebar + table view
+✅ Status animation (Pending ↔ Done)
 
-🔒 Middleware-based route protection
+🧍 Admin dashboard with sidebar navigation
 
-⚙️ Role management via JWT payload
+🔒 Middleware-based access control for /admin routes
 
-🧱 Containerized full-stack system
+🎨 Responsive UI using Shadcn + Tailwind
 
-📸 Screenshots (optional)
+🧩 Modular NestJS + NextJS code structure
 
-Add your UI screenshots here for better documentation.
+🐳 Run everything with one docker compose up
 
-🤝 Contributing
+---
 
-Feel free to fork, modify, and experiment with this project.
-It’s designed to be a learning sandbox for practicing NestJS + NextJS integration.
+## 🤝 Contributing
 
-🪄 Author
+This project is intended as a learning sandbox for developers exploring:
+
+- Full-stack Dockerized development
+
+- NestJS + NextJS integration
+
+- Cookie-based JWT authentication
+
+Feel free to fork, modify, and extend this repo. Pull requests welcome!
+
+---
+
+## 🪄 Author
 
 Thanapat Tongyam
 Full-stack Web Developer
+[🔗 GitHub](https://github.com/Thanapat1502)
+[• LinkedIn](www.linkedin.com/in/thanapat-tongyam)
